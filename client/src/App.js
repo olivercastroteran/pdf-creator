@@ -18,7 +18,14 @@ function App() {
   };
 
   const createAndDownloadPdf = () => {
-    axios.post('/create-pdf', data);
+    axios
+      .post('/create-pdf', data)
+      .then(() => axios.get('fetch-pdf', { responseType: 'blob' }))
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+
+        saveAs(pdfBlob, 'newPdf.pdf');
+      });
   };
   return (
     <div className="app">

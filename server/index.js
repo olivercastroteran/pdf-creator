@@ -15,11 +15,11 @@ app.use(bodyParse.json());
 
 // POST - PDF generation and data fetching
 app.post('/create-pdf', (req, res) => {
-  pdf.create(pdfTemplate(req.data), {}).toFile('result.pdf', (err) => {
+  pdf.create(pdfTemplate(req.body), {}).toFile('result.pdf', (err) => {
     if (err) {
-      return Promise.reject();
+      res.send(Promise.reject());
     }
-    Promise.resolve();
+    res.send(Promise.resolve());
   });
 });
 
